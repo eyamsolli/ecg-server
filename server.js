@@ -1,7 +1,8 @@
 const express = require("express");
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./serviceAccountKey.json");
+// Firebase credentials from Render environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -11,6 +12,7 @@ admin.initializeApp({
 const db = admin.database();
 
 const app = express();
+
 app.use(express.json());
 
 app.post("/ecg", async (req, res) => {
@@ -27,11 +29,14 @@ app.post("/ecg", async (req, res) => {
     res.status(200).send("OK");
 
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send("ERROR");
   }
 });
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("ECG server running on port 3000");
+// Render-compatible port
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`ECG server running on port ${PORT}`);
 });
