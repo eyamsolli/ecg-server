@@ -1,6 +1,8 @@
 const express = require("express");
 const admin = require("firebase-admin");
-
+app.get("/", (req, res) => {
+  res.send("ECG server is running");
+});
 // Firebase credentials from Render environment variable
 const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
