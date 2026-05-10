@@ -1,3 +1,4 @@
+console.log("🔥 NEW SERVER VERSION LOADED");
 const express = require("express");
 const admin = require("firebase-admin");
 
