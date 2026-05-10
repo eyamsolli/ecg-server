@@ -1,8 +1,8 @@
 const express = require("express");
 const admin = require("firebase-admin");
-app.get("/", (req, res) => {
-  res.send("ECG server is running");
-});
+
+const app = express();
+
 // Firebase credentials from Render environment variable
 const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 
@@ -13,10 +13,14 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const app = express();
-
 app.use(express.json());
 
+// Health route
+app.get("/", (req, res) => {
+  res.send("ECG server is running");
+});
+
+// ECG route
 app.post("/ecg", async (req, res) => {
   try {
     const ecgValue = req.body.ecg;
@@ -36,7 +40,7 @@ app.post("/ecg", async (req, res) => {
   }
 });
 
-// Render-compatible port
+// Render port
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
