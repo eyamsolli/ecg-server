@@ -17,8 +17,7 @@ app.use(express.json());
 
 // Health route
 app.get("/", (req, res) => {
-  res.send("ECG server is running");
-});
+res.send("ECG SERVER REDEPLOY FIXED v4");});
 
 // ECG route
 app.post("/ecg", async (req, res) => {
